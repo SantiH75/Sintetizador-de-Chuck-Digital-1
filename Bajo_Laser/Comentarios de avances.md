@@ -1,4 +1,4 @@
-# BAJO LáSER
+# Bajo Láser
 
 Este repositorio hace parte del proyecto de un sintetizador que incorpora distintos instrumentos realizados por los estudiantes que se comunican a través de una FPGA y que a través de Chuck se genere música.Específicamente en este repositorio se encuentra un módulo que busca simular un bajo a través de láseres, fotorresistencias y potenciometros.
 
