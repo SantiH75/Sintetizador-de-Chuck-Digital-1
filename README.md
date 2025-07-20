@@ -1,4 +1,4 @@
-# Sintetizador-Digital
+# Sintetizador de chuck Digital
 
-En este repositorio se encuentra toda la documentacion del proyecto general y de cada grupo de trabajo, para cada instrumento hay una carpeta destinada que contiene toda la descripcion del proceso de desarrollo, tanto a nivel de software como a nivel de hardware. Todos contaron con la tutoria del Ingeniero Electronico Jhonny Cubides. 
+Aqui va la descripcion y detalles generales del proyecto completo (el sinsetizador), la documentacion de cada instrumento esta divida en un conjunto de carpetas en el que cada grupo explica todo su proceso tanto de software como de hardware, ademas de los archivos e imagenes correspondientes.
 
