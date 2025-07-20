@@ -5,7 +5,7 @@ En el presente repositorio se presenta la descripcion y detalles generales del p
 Los instrumentos presentes son:
 
 -
-- Theremin Digital
+- Theremín Digital
 - Bajo Lasér
 -
 -
