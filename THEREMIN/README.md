@@ -124,6 +124,9 @@ Se simularos los modulos mencionados anteriormente:
 <img width="1153" height="322" alt="imagen" src="https://github.com/user-attachments/assets/3e285aad-2c7f-4d74-9961-80f8c2d5b019" />
 
 ### Simulacion midi_volume_sender.v:
+<img width="1131" height="366" alt="imagen" src="https://github.com/user-attachments/assets/5fb5bdc6-e0ec-46cc-b014-dddf783c6e6f" />
+
+
 
 
 
