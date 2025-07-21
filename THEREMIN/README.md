@@ -126,6 +126,20 @@ Se simularos los modulos mencionados anteriormente:
 ### Simulacion midi_volume_sender.v:
 <img width="1131" height="366" alt="imagen" src="https://github.com/user-attachments/assets/5fb5bdc6-e0ec-46cc-b014-dddf783c6e6f" />
 
+### Simulacion uart_tx.v:
+<img width="1158" height="215" alt="imagen" src="https://github.com/user-attachments/assets/37835ce0-4b1e-41ae-92db-681c0c876d68" />
+
+### Simulacion ultrasonic_sensor.v:
+<img width="1159" height="386" alt="imagen" src="https://github.com/user-attachments/assets/67fcb392-4f3c-415f-a923-659458eb4045" />
+<img width="1156" height="393" alt="imagen" src="https://github.com/user-attachments/assets/9d308e90-c71a-43d0-a362-a35cdb3fd9a5" />
+
+### Simulacion top_module.v:
+<img width="1154" height="471" alt="imagen" src="https://github.com/user-attachments/assets/ef1a6071-e09e-432b-8df0-d722f7691e0b" />
+<img width="1157" height="465" alt="imagen" src="https://github.com/user-attachments/assets/a00004c9-853e-4f02-b5bc-37d1ecf4de3b" />
+
+
+
+
 
 
 
