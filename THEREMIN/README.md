@@ -1,274 +1,136 @@
-<!-- LTeX: enabled=true language=es -->
-<!-- :set spell! -->
-<!-- :MarkdownPreview -->
-<!-- :GenTocMarked -->
+# THEREMIN (PROYECTO ELECTRÓNICA DIGITAL)
+En el presente repositorio se expondrá en que conssitió el proyecto realizado en la aignatura de electrónica digital, mostrando el paso a paso realizado
+- Dilan Mateo Torres Muñoz
+- Arturo Moreno Covaría
+- Nicolás Zarate Acosta
+- 
 
-# SoC FemtoRiscv32i
+Bienvenidos a nuestro repositorio del proyecto final de nuestra clase de electrónica digital de la Universidad Nacional de Colombia del semestre 2025-I, el cual consistía en el diseño y posterior implementación de  un theremin (instrumento musical), realizando una versión digital de este mismo mediante el uso de sensores ultrasónicos, FPGA y ESP32.
 
-![SoC FemtoR32i](./docs/SOC.svg)
+# Objetivos del proyecto
+- Construir un diseño electrónico que detecte movimiento, en este caso que detecte el movimiento de la mano y la posición de ella mediante sensores ultrasónicos
+- Diseñar un modelo que permita generar sonidos, con sus respectivas características (frecuencia y volumen) según la distancia detectada por el sensor.
 
-A continuación se presenta el diseño y configuración de un SoC basado en el FemtoRiscv32i (RV32I), como se muestra en la imagen superior.  
-Este diseño es el resultado de diversas experiencias en la enseñanza del diseño de sistemas digitales, orientadas por el profesor Carlos Camargo de la Universidad Nacional de Colombia, las cuales he documentado y adaptado con fines pedagógicos.
+# ¿Que es un theremin?
+<img width="444" height="259" alt="image" src="https://github.com/user-attachments/assets/a56dd0b0-8218-48bc-96da-9a208ffc4796" />
 
-Este SoC incorpora un procesador RV32I con el conjunto de instrucciones base, una memoria RAM para la carga de instrucciones y la ejecución del programa, un decodificador de direcciones (*address decoder*) y un *chip select* para gestionar el flujo de información entre los distintos periféricos.  
-En este ejemplo, los periféricos implementados son:  
-- Una UART para la comunicación entre el CPU y el exterior,  
-- y un periférico de multiplicación por hardware, que sirve como punto de partida para el diseño de otros periféricos específicos según la aplicación.
+Un theremin es un instrumento musical electrónico inventado por Léon Theremin, que se caracteriza por ser tocado sin contacto físico directo. Se controla mediante el movimiento de las manos alrededor de dos antenas, una para el tono y otra para el volumen, alterando campos electromagnéticos.
 
-El flujo de diseño, tanto de hardware como de software, es completamente *opensource*/*openhardware*, haciendo uso de herramientas como **Yosys**, **Nextpnr**, **Netlistsvg**, el compilador **GCC**, entre otras.
+# Planteamiento
+```mermaid
+flowchart TB
+  %% Theremin Digital - Flujo General (de arriba hacia abajo)
+  start([Inicio])
+  start --> RESET{Reset equipo}
+  RESET -- Sí --> INIT[Sistema Inicializa]
+  INIT --> SENSOR_INIT[Configura HCS & ESP32]
+  SENSOR_INIT --> FPGA_INIT[Configura UART & Clocks FPGA]
+  FPGA_INIT --> RUN[Ejecución]
+  RESET -- No --> RUN
 
-A grandes rasgos, el flujo de diseño consta de tres pasos:
+  subgraph Loop[Ejecución Continua]
+    direction TB
+    HCS[Sensor HCS] -->|Lectura ADC| ESP32[ESP32]
+    ESP32 -->|Procesa distancia y escala fase| ESP32_PROC[Procesamiento]
+    ESP32_PROC -->|Envía phase_inc por UART| FPGA[FPGA Colorlight 5A-75E]
+    subgraph FPGA_COLORLIGHT
+      direction TB
+      REG_IF["Interfaz UART"] --> PHASE_ACC["Registrador de fase"]
+      PHASE_ACC --> NCO["Acumulador de fase (NCO)"]
+      NCO --> WAVE_LUT["Tabla de seno (LUT)"]
+      WAVE_LUT --> PWM_GEN["Generador PWM"]
+      PWM_GEN --> AUDIO_OUT["Audio PWM"]
+    end
+    AUDIO_OUT -->|Filtro Pasabajo| SPEAKER[Altavoz]
+  end
 
-1. Compilación de las tareas de software para el RV32I en lenguaje **C** ([./firmware/c-code/](./firmware/c-code/)) o en **ASM** ([./firmware/asm/](./firmware/asm/)), utilizando el *toolchain* de GCC para RISC-V.
-2. Síntesis del SoC desde el `Makefile` (`./Makefile`) ubicado en este directorio, empleando herramientas como **Yosys** y **Nextpnr**.
-3. Configuración del diseño en la FPGA.
-
-> **A tener en cuenta**: Para poder replicar este ejemplo, por favor descarga el archivo [femtoriscv.zip](./femtoriscv.zip).
-
-## Implementación SoC en FPGA y ESP32 como interfaz
-
-![fpga-ftdi-esp32](./docs/colorlight-ftdi232rl-esp32.jpg)
-
-
-Para que el soc tenga una capacidad mayor de integración, en este ejemplo se
-integra un microcontrolador **ESP32** que puede servir para 3 propósitos específicos:
-
-- Ser un bridge entre la UART de la FPGA y una comunicación serial, que permita la
-comunicación guida con otros sistemas como por ejemplo un PC.
-- Ser un bridge entre la UART y una comunicación no guiada (WiFi) o Bluetooth, de
-tal manera que el SoC puede ser parte de una solución en red y que pueda
-exponer servicios consumibles en red.
-- Si la FPGA no cuenta con un periférico ADC, se puede aprovechar el
-periférico ADC del ESP32 y devolver los datos de conversión al SoC para los
-propósitos de procesamiento.
-
-### Síntesis y configuración del SoC en la FPGA
-
-![Conexión fpga-bridge](./docs/soc-esp32_fpga_bridge.svg)
-
-En esta parte del proceso se debe realizar la conexión entre los dispositivos
-que se observan en la imagen de arriba de color verde. Observe que deberá
-cablear el FT232RL con el puerto JTAG de la FPGA responsable de la
-configuración. Recuerde que debe tener instaladas las herramientas de diseño
-que encontrará en el
-[README.md](https://github.com/johnnycubides/digital-electronic-1-101/tree/main)
-de este repositorio. Si aún no ha realizado el proceso de configuración de un
-proyecto para esta FPGA, visita el siguiente enlace:
-
-[Configuración volatíl y persistente para esta FPGA](https://github.com/johnnycubides/digital-electronic-1-101/tree/main/fpga-example/colorlight-5a-75e)
-
-
-Seguido, deberá ejecutar los siguientes comandos para realizar el proceso de
-implementación del SoC en la FPGA:
-
-```bash
-cd ./firmware/ && make firmware_words # Generar tradutor bin a palabras. Solo se ejecuta una ÚNICA VEZ
-make c-clean c-build # Creación ejecutable de riscv32i
-make clean syn # Crear el bitstream para configurar la fpga
-make config # Configurar fpga
+  RUN --> Loop
 ```
 
-Si la terminal entrega resultados sin errores podría continuar el siguiente paso.
+## Requrimentos del proyecto:
 
-## Configurar el ESP32 como bridge UART
+### Requerimientos Funcionales
 
-![fpga-esp32](./docs/soc-esp32_picocom.svg)
+-  **Medición de distancia**
+  - Se utilizan sensores ultrasónicos (HC-SR04) para medir distancia en centímetros.
+  - Se usan dos sensores: uno para la nota y otro para el volumen.
 
-Manteniendo el circuito anteriormente implementado, se requiere ahora cablear el esp32 a la FPGA.
-Para este propósito, deberá prestar especial atención al diagrama de arriba 
-donde se señalan los elementos a cablear con color azul. Observe además que cada puerto
-de cada componente tiene señalado el número de pin a usar para ello vísite la información
-relacionada al pinout tanto de la FPGA como del esp32 a usar.
+- **Generación de nota MIDI**
+  - Convierte la distancia medida en una nota MIDI válida (0–127).
+  - Evita repetir la misma nota si no hay cambios.
 
-Seguido podrá realizar el proceso de flashing del esp32 como de la ejecución del programa
-de ejemplo corriendo en el SoC.
+- **Generación de volumen MIDI**
+  - Escala la segunda distancia a un valor de velocidad (volumen) MIDI (0–127).
 
-1. Instalar las dependencias de flashing del esp32. Para ello, ejecute estos pasos:
+- **Codificación de mensajes MIDI**
+  - Crea mensajes `Note On` y `Control Change` válidos según el estándar MIDI.
 
-```bash
-sudo apt install picocom
-conda activate digital # Active la variable de entorno de digital
-pip install click esptool pyyaml adafruit-ampy
-```
+- **Transmisión UART**
+  - Envía los datos MIDI usando UART a 31250 baudios, 8 bits, sin paridad, 1 bit de parada.
 
-> **Observación**: en el caso de no ser compatible la variable de entorno
-**generando error**, podría crear una nueva variable de entorno con conda que
-soporte los paquetes a instalar, por ejemplo:
-```bash
-# Ejecutar estos pasos solo si los pasos anteriores del punto 1. fallaron
-conda create --name esp32
-conda activate esp32
-pip install click esptool pyyaml adafruit-ampy
-```
+-  **Integración de módulos**
+  - Un módulo principal (`top_module.v`) conecta todos los componentes del sistema.
+  - El sistema opera sincronizado por una señal de reloj (`clk`).
 
-Tenga presente que para desactivar el entorno basta con `conda deactivate`.
+---
 
+###  Requerimientos No Funcionales
 
-2. Desde la [página oficial de descargas de Micropython para el
-   ESP32](https://micropython.org/download/ESP32_GENERIC/) descargue la útima
-versión de micropython disponibles para el esp32, en este caso se trata de la
-versión
-[v1.25.0(2025-4-15).bin](https://micropython.org/resources/firmware/ESP32_GENERIC-20250415-v1.25.0.bin),
-para tal finalidad puede ejecutar el siguiente comando:
+-  **Modularidad**
+  - Cada funcionalidad está separada en módulos Verilog independientes.
 
-```bash
-wget -O micropython-esp32.bin "https://micropython.org/resources/firmware/ESP32_GENERIC-20250415-v1.25.0.bin"
-```
+-  **Simulación con testbenches**
+  - Archivos de prueba (`midi_note_sender_tb.v`, `midi_volume_sender_tb.v`) simulan la entrada de distancias y verifican la salida MIDI.
 
-3. Instale micropython en el esp32. Para ello solo deje conectado el esp32 en
-   los puertos USB del PC así logrará que el instalador detecte automáticamente
-el bridge del esp32 para su flashing. Ejecute los siguientes comandos:
+-  **Simulación funcional**
+  - Compatible con simuladores como Icarus Verilog + GTKWave.
 
-```bash
-# Recuerde tener activa la variable de entorno donde tienen instalada las librerías de python
-esptool.py erase_flash
-esptool.py --baud 460800 write_flash 0x1000 micropython-esp32.bin
-```
+-  **Escalabilidad**
+  - El diseño permite la integración de más sensores o generación de otros mensajes MIDI.
 
-Resultado:
+-  **Código documentado**
+  - Cada módulo está comentado para facilitar su comprensión y mantenimiento.
 
-<details>
+---
 
-```bash
-esptool.py v4.7.0
-Found 6 serial ports
-Serial port /dev/ttyUSB0
-Connecting......................................
-/dev/ttyUSB1 failed to connect: Failed to connect to Espressif device: No serial data received.
-For troubleshooting steps visit: https://docs.espressif.com/projects/esptool/en/latest/troubleshooting.html
-Serial port /dev/ttyUSB1
-Connecting....
-Detecting chip type... Unsupported detection protocol, switching and trying again...
-Connecting.....
-Detecting chip type... ESP32
-Chip is ESP32-D0WDQ6 (revision v1.0)
-Features: WiFi, BT, Dual Core, 240MHz, VRef calibration in efuse, Coding Scheme None
-Crystal is 40MHz
-MAC: a4:cf:12:74:fd:e4
-Uploading stub...
-Running stub...
-Stub running...
-Erasing flash (this may take a while)...
-Chip erase completed successfully in 7.6s
-Hard resetting via RTS pin...
-```
+###  Potencial de Expansión: SoC Real
 
->  **Observación**: En el caso de que no haga flashing, oprima el botón de BOOT en el esp32:
+Aunque actualmente es un SoC lógico simulado, este proyecto puede escalarse a un **SoC físico embebido** mediante:
 
-</details>
+- Integración en un FPGA o ASIC
+- Incorporación de un microcontrolador embebido (RISC-V, ARM)
+- Soporte para memoria interna (RAM/ROM)
+- Interfaz con sintetizadores reales por MIDI DIN o USB-MIDI
+
+---
+
+###  Módulos Verilog
+
+| Archivo                  | Función |
+|--------------------------|---------|
+| `ultrasonic_sensor.v`    | Mide la distancia con sensores ultrasónicos |
+| `midi_note_sender.v`     | Convierte distancia a nota MIDI |
+| `midi_volume_sender.v`   | Convierte distancia a volumen MIDI |
+| `uart_tx.v`              | Transmisor UART compatible MIDI |
+| `top_module.v`           | Integra todos los módulos anteriores |
+| `*_tb.v`                 | Testbenches para simular comportamiento |
+
+---
+## Diagrama ASM/ Maquina de estados/ diagramas funcionales:
+## Diagrama RTL del SoC y su mòdulo:
+## Simulaciones:
+Se simularos los modulos mencionados anteriormente:
+### Simulacion midi_note_sender.v:
+<img width="1153" height="322" alt="imagen" src="https://github.com/user-attachments/assets/3e285aad-2c7f-4d74-9961-80f8c2d5b019" />
+
+### Simulacion midi_volume_sender.v:
+<img width="1131" height="366" alt="imagen" src="https://github.com/user-attachments/assets/5fb5bdc6-e0ec-46cc-b014-dddf783c6e6f" />
 
 
-4. Abra una terminal e interactúe con Micropython el cual usa una sintaxis de Python3. Para ello, ejecute los siguientes comandos:
 
-```bash
-# Verifique el archivo representativo del puerto serial del esp32, es probable que sea /dev/ttyUSB1
-picocom /dev/ttyUSB1 -b 115200 # Dependiendo del archivo representativo el tty puede cambiar
-```
 
-Resultado:
 
-<details>
-
-  ```py
-picocom /dev/ttyUSB1 -b 115200
-picocom v3.1
-
-port is        : /dev/ttyUSB1
-flowcontrol    : none
-baudrate is    : 115200
-parity is      : none
-databits are   : 8
-stopbits are   : 1
-escape is      : C-a
-local echo is  : no
-noinit is      : no
-noreset is     : no
-hangup is      : no
-nolock is      : no
-send_cmd is    : sz -vv
-receive_cmd is : rz -vv -E
-imap is        : 
-omap is        : 
-emap is        : crcrlf,delbs,
-logfile is     : none
-initstring     : none
-exit_after is  : not set
-exit is        : no
-
-Type [C-a] [C-h] to see available commands
-Terminal ready
-
->>> print("hello")
-hello
->>> 
-```
-
-</details>
-
-Para salir de `picocom`, ejecute la secuencia **CTRL+a** y luego **CTRL+x**.
-
-5. Cargue un script de Micropython en el esp32 para realizar el puente entre la FPGA y el esp32.
-Para tal finalidad, cree un archivo `main.py` y agregue el siguiente contenido:
-
-```py
-from machine import UART
-from time import sleep
-
-uart_fpga = None
-uart_usb = None
-
-def init():
-    global uart_usb
-    global uart_fpga
-    # UART0: ahora libre
-    uart_usb = UART(1, baudrate=115200, tx=1, rx=3)
-    # UART2: FPGA
-    uart_fpga = UART(2, baudrate=57600, tx=17, rx=16)
-
-def bridge_uart():
-    while True:
-        if uart_fpga.any():
-            uart_usb.write(uart_fpga.read())
-        if uart_usb.any():
-            uart_fpga.write(uart_usb.read())
-        sleep(0.001)
-
-def start():
-    init()
-    bridge_uart()
-
-```
-
-A continuación suba el script `main.py` al esp32. Para ello ejecuta el siguiente comando:
-
-```bash
-ampy -p /dev/ttyUSB1 -b 115200 put main.py
-```
-
-5. Inicie el script y arranque el programa en la FPGA. Para tal finalidad abra la terminal de picocom asociada al esp32, por ejemplo:
-
-```bash
-picocom /dev/ttyUSB1 -b 115200 # Dependiendo del archivo representativo el tty puede cambiar
-```
-
-Ahora para verificar el funcionamiento en el prompt de micropython ejecute la instrución `start()` y luego Oprima el botón de **RESET** de la FPGA, el cual está indicado en el acrhivo `./docs/colorlight-5a-75e-v8.2.drawio.pdf`.
-
-```py
->>> start() # Oprima reset en la FPGA
-# Mostrará las diferentes operaciones de multiplicación
-2x3=6
-2x4=8
-2x5=10
-2x6=12
-2x7=14
-2x8=16
-2x9=18
-3x2=0
-3x3=9
-3x4=12
-3x5=15
-```
-
-2025-06-18
-
-Johnny Cubides
+## Video simulacion: 
+## Logs de make log-prn, make log-syn
+## ¿Còmo interactùa con entornos externos?
+## Video del proyecto
