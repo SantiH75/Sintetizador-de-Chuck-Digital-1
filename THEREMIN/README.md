@@ -119,6 +119,14 @@ Aunque actualmente es un SoC lógico simulado, este proyecto puede escalarse a u
 ## Diagrama ASM/ Maquina de estados/ diagramas funcionales:
 ## Diagrama RTL del SoC y su mòdulo:
 ## Simulaciones:
+Se simularos los modulos mencionados anteriormente:
+### Simulacion midi_note_sender.v:
+<img width="1153" height="322" alt="imagen" src="https://github.com/user-attachments/assets/3e285aad-2c7f-4d74-9961-80f8c2d5b019" />
+
+### Simulacion midi_volume_sender.v:
+
+
+
 ## Video simulacion: 
 ## Logs de make log-prn, make log-syn
 ## ¿Còmo interactùa con entornos externos?
