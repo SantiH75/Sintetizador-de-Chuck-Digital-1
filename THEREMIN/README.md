@@ -47,7 +47,75 @@ flowchart TB
   RUN --> Loop
 ```
 
-## Requrimentos funcionales:
+## Requrimentos fdel proyecto:
+
+### ✅ Requerimientos Funcionales
+
+- 🧭 **Medición de distancia**
+  - Se utilizan sensores ultrasónicos (HC-SR04) para medir distancia en centímetros.
+  - Se usan dos sensores: uno para la nota y otro para el volumen.
+
+- 🎵 **Generación de nota MIDI**
+  - Convierte la distancia medida en una nota MIDI válida (0–127).
+  - Evita repetir la misma nota si no hay cambios.
+
+- 🔊 **Generación de volumen MIDI**
+  - Escala la segunda distancia a un valor de velocidad (volumen) MIDI (0–127).
+
+- 🎼 **Codificación de mensajes MIDI**
+  - Crea mensajes `Note On` y `Control Change` válidos según el estándar MIDI.
+
+- 📤 **Transmisión UART**
+  - Envía los datos MIDI usando UART a 31250 baudios, 8 bits, sin paridad, 1 bit de parada.
+
+- 🧩 **Integración de módulos**
+  - Un módulo principal (`top_module.v`) conecta todos los componentes del sistema.
+  - El sistema opera sincronizado por una señal de reloj (`clk`).
+
+---
+
+### ⚙️ Requerimientos No Funcionales
+
+- 📦 **Modularidad**
+  - Cada funcionalidad está separada en módulos Verilog independientes.
+
+- 🧪 **Simulación con testbenches**
+  - Archivos de prueba (`midi_note_sender_tb.v`, `midi_volume_sender_tb.v`) simulan la entrada de distancias y verifican la salida MIDI.
+
+- 📈 **Simulación funcional**
+  - Compatible con simuladores como Icarus Verilog + GTKWave.
+
+- 🛠️ **Escalabilidad**
+  - El diseño permite la integración de más sensores o generación de otros mensajes MIDI.
+
+- 📝 **Código documentado**
+  - Cada módulo está comentado para facilitar su comprensión y mantenimiento.
+
+---
+
+## 🧠 Potencial de Expansión: SoC Real
+
+Aunque actualmente es un SoC lógico simulado, este proyecto puede escalarse a un **SoC físico embebido** mediante:
+
+- Integración en un FPGA o ASIC
+- Incorporación de un microcontrolador embebido (RISC-V, ARM)
+- Soporte para memoria interna (RAM/ROM)
+- Interfaz con sintetizadores reales por MIDI DIN o USB-MIDI
+
+---
+
+## 📁 Módulos Verilog
+
+| Archivo                  | Función |
+|--------------------------|---------|
+| `ultrasonic_sensor.v`    | Mide la distancia con sensores ultrasónicos |
+| `midi_note_sender.v`     | Convierte distancia a nota MIDI |
+| `midi_volume_sender.v`   | Convierte distancia a volumen MIDI |
+| `uart_tx.v`              | Transmisor UART compatible MIDI |
+| `top_module.v`           | Integra todos los módulos anteriores |
+| `*_tb.v`                 | Testbenches para simular comportamiento |
+
+---
 ## Diagrama ASM/ Maquina de estados/ diagramas funcionales:
 ## Diagrama RTL del SoC y su mòdulo:
 ## Simulaciones:
