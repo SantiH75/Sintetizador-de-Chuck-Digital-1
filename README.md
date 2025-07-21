@@ -6,7 +6,7 @@ La documentación de cada instrumento está dividida en un conjunto de carpetas,
 
 Los instrumentos presentes son:
 
--
+- Trompeta
 - Theremín Digital
 - Bajo Lasér
 -
