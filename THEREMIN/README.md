@@ -47,7 +47,7 @@ flowchart TB
   RUN --> Loop
 ```
 
-## Requrimentos fdel proyecto:
+## Requrimentos del proyecto:
 
 ### ✅ Requerimientos Funcionales
 
@@ -93,7 +93,7 @@ flowchart TB
 
 ---
 
-## 🧠 Potencial de Expansión: SoC Real
+### 🧠 Potencial de Expansión: SoC Real
 
 Aunque actualmente es un SoC lógico simulado, este proyecto puede escalarse a un **SoC físico embebido** mediante:
 
@@ -104,7 +104,7 @@ Aunque actualmente es un SoC lógico simulado, este proyecto puede escalarse a u
 
 ---
 
-## 📁 Módulos Verilog
+### 📁 Módulos Verilog
 
 | Archivo                  | Función |
 |--------------------------|---------|
