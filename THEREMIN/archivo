@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# run_sim.sh — Compila el testbench, genera el .vcd y abre GTKWave
+
+# 1. Compilar
+iverilog -g2012 -o tb_ultrasonic.vvp ultrasonic_sensor.v tb_ultrasonic_sensor.v
+
+# 2. Ejecutar la simulación (genera tb_ultrasonic.vcd)
+vvp tb_ultrasonic.vvp
+
+# 3. Abrir GTKWave con el archivo VCD
+gtkwave tb_ultrasonic.vcd
