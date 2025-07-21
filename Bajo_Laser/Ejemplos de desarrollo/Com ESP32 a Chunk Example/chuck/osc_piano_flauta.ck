@@ -37,7 +37,7 @@ fun void listenOSC() {
                 <<< "Nota de piano recibida:", note >>>;
                 spork ~ playPiano(note);
             }
-            else if (msg.address == "/dev2/flauta") {
+            else if (msg.address == "/dev2/piano") {
                 msg.getInt(0) => int note;
                 <<< "Nota de flauta recibida:", note >>>;
                 spork ~ playFlauta(note);
