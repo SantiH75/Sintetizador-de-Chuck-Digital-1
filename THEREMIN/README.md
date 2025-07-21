@@ -74,7 +74,7 @@ flowchart TB
 
 ---
 
-### ⚙️ Requerimientos No Funcionales
+###  Requerimientos No Funcionales
 
 -  **Modularidad**
   - Cada funcionalidad está separada en módulos Verilog independientes.
