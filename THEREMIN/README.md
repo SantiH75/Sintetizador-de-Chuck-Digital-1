@@ -49,26 +49,26 @@ flowchart TB
 
 ## Requrimentos del proyecto:
 
-### ✅ Requerimientos Funcionales
+### Requerimientos Funcionales
 
-- 🧭 **Medición de distancia**
+-  **Medición de distancia**
   - Se utilizan sensores ultrasónicos (HC-SR04) para medir distancia en centímetros.
   - Se usan dos sensores: uno para la nota y otro para el volumen.
 
-- 🎵 **Generación de nota MIDI**
+- **Generación de nota MIDI**
   - Convierte la distancia medida en una nota MIDI válida (0–127).
   - Evita repetir la misma nota si no hay cambios.
 
-- 🔊 **Generación de volumen MIDI**
+- **Generación de volumen MIDI**
   - Escala la segunda distancia a un valor de velocidad (volumen) MIDI (0–127).
 
-- 🎼 **Codificación de mensajes MIDI**
+- **Codificación de mensajes MIDI**
   - Crea mensajes `Note On` y `Control Change` válidos según el estándar MIDI.
 
-- 📤 **Transmisión UART**
+- **Transmisión UART**
   - Envía los datos MIDI usando UART a 31250 baudios, 8 bits, sin paridad, 1 bit de parada.
 
-- 🧩 **Integración de módulos**
+-  **Integración de módulos**
   - Un módulo principal (`top_module.v`) conecta todos los componentes del sistema.
   - El sistema opera sincronizado por una señal de reloj (`clk`).
 
@@ -76,24 +76,24 @@ flowchart TB
 
 ### ⚙️ Requerimientos No Funcionales
 
-- 📦 **Modularidad**
+-  **Modularidad**
   - Cada funcionalidad está separada en módulos Verilog independientes.
 
-- 🧪 **Simulación con testbenches**
+-  **Simulación con testbenches**
   - Archivos de prueba (`midi_note_sender_tb.v`, `midi_volume_sender_tb.v`) simulan la entrada de distancias y verifican la salida MIDI.
 
-- 📈 **Simulación funcional**
+-  **Simulación funcional**
   - Compatible con simuladores como Icarus Verilog + GTKWave.
 
-- 🛠️ **Escalabilidad**
+-  **Escalabilidad**
   - El diseño permite la integración de más sensores o generación de otros mensajes MIDI.
 
-- 📝 **Código documentado**
+-  **Código documentado**
   - Cada módulo está comentado para facilitar su comprensión y mantenimiento.
 
 ---
 
-### 🧠 Potencial de Expansión: SoC Real
+###  Potencial de Expansión: SoC Real
 
 Aunque actualmente es un SoC lógico simulado, este proyecto puede escalarse a un **SoC físico embebido** mediante:
 
@@ -104,7 +104,7 @@ Aunque actualmente es un SoC lógico simulado, este proyecto puede escalarse a u
 
 ---
 
-### 📁 Módulos Verilog
+###  Módulos Verilog
 
 | Archivo                  | Función |
 |--------------------------|---------|
