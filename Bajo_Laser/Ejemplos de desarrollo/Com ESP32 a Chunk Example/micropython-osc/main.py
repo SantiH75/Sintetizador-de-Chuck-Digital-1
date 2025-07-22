@@ -31,7 +31,7 @@ uart_fpga = UART(2, baudrate=BAUDRATE, tx=TX_PIN, rx=RX_PIN)
 def connectSTA(ssid, pwd):
     sta_if = network.WLAN(network.STA_IF)
     if not sta_if.isconnected():
-        print("connecting to network...")
+        print("conectandose al sintetizador...")
         sta_if.active(True)
         sta_if.connect(ssid, pwd)
         while not sta_if.isconnected():
