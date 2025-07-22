@@ -20,7 +20,7 @@ def bridge_uart():
             uart_fpga.write(uart_usb.read())
         sleep(0.001)
 
-def start():
+def TocarBajo():
     init()
     bridge_uart()
 

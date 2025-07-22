@@ -15,10 +15,10 @@ volatile uint32_t *const get_laser = (uint32_t *)(LASER + GET_LASER);
 volatile uint32_t *const gp = (uint32_t *)IO_BASE;
 
 // Mensaje a mostrar (equivalente a la sección .data)
-char buffer[16] = "start LASER\n\r";  // Se crea un buffer de caracteres para enviar textos por UART.
+char buffer[16] = "Tocar LASER\n\r";  // Se crea un buffer de caracteres para enviar textos por UART.
 
 
-
+//bucle de ejecucion del programa
 int main() {
   putstring(buffer);
   uint8_t laserin = 0;  //Se declara una variable de 8 bits llamada laserin que almacenará lo leído del láser.
@@ -26,10 +26,10 @@ int main() {
   // En realidad en C esto lo hace el startup code
   while (1) { // Equivalente al main_loop
     putstring("\nAcorde: \r\n");
-    laserin = *get_laser; // capturar
-    itoa_simple_signed(laserin, buffer); // transforma a str
+    laserin = *get_laser; // captura, letyendo el dato del acorde
+    itoa_simple_signed(laserin, buffer); // transforma a str cadena 
     putstring(buffer); // Imprime por uart
     wait(20); // Valor arbitrario para el wait (en ASM se usaba a0)
   }
-  return 0; // Nunca se alcanzará
+  return 0; // Nunca se alcanzará, se repite todo
 }

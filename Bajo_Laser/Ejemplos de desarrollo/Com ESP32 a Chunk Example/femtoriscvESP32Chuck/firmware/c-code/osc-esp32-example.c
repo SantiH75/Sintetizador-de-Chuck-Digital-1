@@ -19,7 +19,9 @@ int main() {
   // En realidad en C esto lo hace el startup code
   while (1) { // Equivalente al main_loop
     uint8_t i;
-    for (i = 60; i < 80; i++) {
+    for (i = 60; i < 80; i++) {    //recoger valores de MIDI del 60 al 79
+
+  // Construccion del mensaje
       osc_msg[0] = '\0';           // Limpiando el array de char
       itoa_simple_signed(i, midi); // Convertir el entero a string y guardar
       mi_strcat(osc_msg, topic);   // Agregar el topic al mensaje
