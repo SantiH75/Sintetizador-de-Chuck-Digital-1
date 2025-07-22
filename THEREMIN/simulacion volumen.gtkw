@@ -1,0 +1,40 @@
+[*]
+[*] GTKWave Analyzer v3.3.117 (w)1999-2023 BSI
+[*] Mon Jul 21 05:26:55 2025
+[*]
+[dumpfile] "/home/arturo69/Descargas/PROYECTO THEREMIN/midi_volume_sender.vcd"
+[dumpfile_mtime] "Mon Jul 21 05:23:52 2025"
+[dumpfile_size] 2324
+[savefile] "/home/arturo69/Descargas/PROYECTO THEREMIN/simulacion volumen.gtkw"
+[timestart] 0
+[size] 1366 710
+[pos] -1 -1
+*-13.851724 1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] midi_volume_sender_tb.
+[sst_width] 201
+[signals_width] 166
+[sst_expanded] 1
+[sst_vpaned_height] 192
+@420
+midi_volume_sender_tb.uut.IDLE
+midi_volume_sender_tb.uut.SEND1
+midi_volume_sender_tb.uut.SEND2
+midi_volume_sender_tb.uut.SEND3
+@28
+midi_volume_sender_tb.uut.clk
+midi_volume_sender_tb.uut.clk
+@22
+midi_volume_sender_tb.uut.distance_cm[15:0]
+@28
+midi_volume_sender_tb.uut.distance_ready
+@22
+midi_volume_sender_tb.uut.midi_byte[7:0]
+@28
+midi_volume_sender_tb.uut.midi_send
+midi_volume_sender_tb.uut.rst
+midi_volume_sender_tb.uut.state[1:0]
+midi_volume_sender_tb.uut.uart_ready
+@23
+midi_volume_sender_tb.uut.volume[7:0]
+[pattern_trace] 1
+[pattern_trace] 0
