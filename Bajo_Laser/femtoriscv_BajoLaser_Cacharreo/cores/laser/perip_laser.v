@@ -7,7 +7,7 @@ module perip_laser (
     input rd,
     input wr,
     output [31:0] d_out, // Valor de salida
-    input wire [3:0] laser
+    input wire [3:0] laser    //Podria agregar un bit adicional con el potenciometro?
 );
     localparam integer GETLASER = 5'h02; // C #define GETLASER 0x02
     //Leer los laser
@@ -16,7 +16,7 @@ module perip_laser (
         d_out = 0;
         end else begin
             if (cs && rd) begin
-                if (addr[4:0] == GETLASER) begin
+                if (addr[4:0] == GETLASER) begin  //Podria agregar un bit adicional con el potenciometro?
                     d_out <= { 28'b0,laser};
                 end
             end
