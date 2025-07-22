@@ -20,8 +20,8 @@ OBJS    = $(SRCS:.c=.o)              # Convierte libs/archivo.c → libs/archivo
 # OBJECTS = crt0.o loopBackString.o $(OBJS)         # Todos los .o a enlazar
 # OBJECTS = crt0.o multiplier.o $(OBJS)         # Todos los .o a enlazar
 # OBJECTS = crt0.o sendMsg2Uart.o $(OBJS)         # Todos los .o a enlazar
-OBJECTS = crt0.o laser.o $(OBJS)         # Todos los .o a enlazar
-#OBJECTS = crt0.o osc-esp32-example.o $(OBJS)
+OBJECTS = crt0.o laser.o $(OBJS)         # Enlaze del laser 
+#OBJECTS = crt0.o osc-esp32-example.o $(OBJS)  #Enlaze con chuck ejemplo
 
 LIB_DIR = -L/home/$$USER/miniconda3/envs/digital/riscv64-elf/lib/rv32i/ilp32/ \
           -L/home/$$USER/miniconda3/envs/digital/lib/gcc/riscv64-elf/10.1.0/rv32iac/ilp32/
