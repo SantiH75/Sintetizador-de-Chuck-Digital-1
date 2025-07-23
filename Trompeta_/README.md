@@ -21,12 +21,35 @@ En el caso particular de los instrumentos de viento, estos aprovechan un flujo d
 
 # Objetivos 
 
-- Entender el comportamiento modular en el diseño de un sistema digital a través de la implementación de un instruemnto que tenga como base circuito lógicos digitales para modificaci´´on tonal de un soonido.
+- Entender el comportamiento modular en el diseño de un sistema digital a través de la implementación de un instruemnto que tenga como base circuito lógicos digitales para modificación tonal de un sonido.
 - Hacer uso de circuitos combinacionales como herramienta para la construcción de sistemas con un número finito de estados para amnipular las frecuencias enviadas.
 - Utilizar lógica secuencial para detectar cambios en el tiempo de la implementación física representados en un sensor que interactue como transductor en el sistema.
 - Plantear la interacción entre difreneets módulos del sistema para que funcionen y se complementen de manera simultánea.
 - Establecer un sistema de comunicación para el módulo general del instrumento.
 - Desarrollar un diseño físico que soporte y optimize el uso físico del instrumento a tarvés de modelado.
+
+# Requerimientos del proyecto
+
+## Requerimientos funcionales:
+
+- **Selección de nota:**
+  - A través de selectores se reproduce una única nota musical según la combinanción de los mismos.
+  - Tras reconocer la combinación se envia una nota en formato MIDI.
+  - Mantiene el tono hasta que se efectue algún cambio.
+
+- **Selección de altura:**
+   - Se mide la frecuencia de movimiento de una aspa que representa el flujo de aire impregnado al instrumento a través de un sensor.
+   - A través de un intervalo limitado de tiempo, se realiza una cuenta, controlada por el pulso de reloj.
+   - El resultado de la cuenta representa un factor multiplicativo que modifica la altura de la selección de nota del modulo anterior.
+     
+- **Sistema de comunicación:**
+  - Se entregan ambos valores de los modulos anteriores a través de transmisión por UART.
+ 
+## Requerimientos no funcionales:**
+
+- **Modularidad:** Las funcionalidades de selección estan separadas entre sí, de modo que, una no afecta al desemepño de la otra.
+
+- **Diseño físico:** Integra de manera óptima e integral para el usuario una carcasa que facilita el uso y disposición física del dispositivo.
 
 # Planteamiento
 
@@ -47,4 +70,28 @@ Estas tres partes serán los tres modulos principales del proyecto, dos de ellos
 La unidad básica de la música se construye a través de notas musicales, que no son más, que una onda sonorá con cierta frecuencia característica reconocicle al oido humano.
 
 En el sistema de música occidental, sin contar las frecuencias que son multiplos de otras, existen 12 notas musicales. Sin embargo, es común seleccionar 8 de estas notas con relaciones espeíficas entre sí para que suenen agradables (se le llama escala musical), y le brinden cierta sonoridad específica. La escala más conocida es la de Do mayor, que se representan a través de las 8 notas blancas de un teclado, y presenta las 7 notas qe se reconocen comunmente (Do, re, mi, fa, sol, la, si), y adicional, una nota que dobla en frecuencia al primer do (denominado en este proyecto como do alto).
+
+<p align="center">
+<img width="444" height="259" alt="image" src="https://github.com/SantiH75/Sintetizador-de-Chuck-Digital-1/blob/main/Trompeta_/escala-mayor-grados-tonos-semitonos-de-separacion.png" />
+</p>
+
+Los pistones pueden ser simulados a través de un _multiplexor_, basado en selectores (pulsadores), donde cada combinación de estos representa una frecuencia que será reproducida. Como se definió que son necesarias 8 notas, el sistema estará basado en un multiplexor 8x1, que se caracteriza por tener 3 selectores de control.
+
+<p align="center">
+<img width="444" height="259" alt="image" src="https://github.com/SantiH75/Sintetizador-de-Chuck-Digital-1/blob/main/Trompeta_/multiplexor.png" />
+</p>
+
+A continuación, a través de un Diagrama ASM, se sintetiza las combinaciones determinadas para cada nota, además, de su respectivo diagrama de maquina de estados finitos.
+
+<p align="center">
+<img alt="image" src="https://github.com/SantiH75/Sintetizador-de-Chuck-Digital-1/blob/main/Trompeta_/Diagrama_ASM.drawio.png" />
+</p>
+
+<p align="center">
+<img alt="image" src="https://github.com/SantiH75/Sintetizador-de-Chuck-Digital-1/blob/main/Trompeta_/Diagrama_MEF_botones.drawio.png" />
+</p>
+
+## Contador de pulsos
+
+### Caracterización del sistema físico
 
