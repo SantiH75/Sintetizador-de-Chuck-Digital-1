@@ -81,6 +81,17 @@ Los pistones pueden ser simulados a través de un _multiplexor_, basado en selec
 <img width="444" height="259" alt="image" src="https://github.com/SantiH75/Sintetizador-de-Chuck-Digital-1/blob/main/Trompeta_/multiplexor.png" />
 </p>
 
+| Pulsador 1    | Pulsador 2 | Pulsador 3 | Nota reproducida|
+|---------------|------------|------------|-----------------|
+| 0             |0           |0           |Do alto          |
+| 0             |0           |1           |Do               |
+| 0             |1           |0           |Re               |
+| 0             |1           |1           |Fa               |
+| 1             |0           |0           |Mi               |
+| 1             |0           |1           |Sol              |
+| 1             |1           |0           |La               |
+| 1             |1           |1           |Si               |
+
 A continuación, a través de un Diagrama ASM, se sintetiza las combinaciones determinadas para cada nota, además, de su respectivo diagrama de maquina de estados finitos.
 
 <p align="center">
@@ -94,4 +105,41 @@ A continuación, a través de un Diagrama ASM, se sintetiza las combinaciones de
 ## Contador de pulsos
 
 ### Caracterización del sistema físico
+
+Para simular la boquilla de la trompeta, se utiliza una aspa que tiene un iman en uno de sus extremos, que corresponde luego a un circuito con un sensor de Efecto Hall, que funciona como circuito abierto al estar en la cercanía del imán, esto con el final de generar una discontinuidad cada vez que este complete una revolución: Entrega una señal cuadarda con cierta frecuencia. AL montar y probar el sistema, se determina que la frecuencia máxima que alcanza es de 50 Hz, además de brondar una señal de rápido tiempo de bajada, por lo cuál, no se considera necearia la determinación de un tiempo de mantenimiento.
+
+<p align="center">
+<img alt="image" src="https://github.com/SantiH75/Sintetizador-de-Chuck-Digital-1/blob/main/Trompeta_/Sensor_efecto_hall.PNG" />
+</p>
+
+Con el sistema _transductor_ físico ya implemetado, se busca establecer una sería de límites en el número de pulsos en cierto intervalo de tiempo, para determinar la octava a utilizar.
+
+> Una octava, en el contexto de la música, es una nota musical con un afrecuencia mínima de 2:1 (o vicerevrsa) referente a la otra. A efectos de percepción, la nota es la misma, pero más águda o grave.
+
+Para el sistema de conteo se propone, esencialemnte, dos módulos:
+
+- Un temporizador
+- Un contador
+
+El primero, fijado en un segundo, permite limitar el tiempo de conteo (o ciclo) sobre el cual se efectua el conteo. Al llegar al timempo determinado, este llega nuevamente a cero, y se repite indefinidamente. El segundo, en cada ciclo, efectua un incremento cuando el nivel de la señal recibida llega a bajo (Una vuelta de la aspa). Estos dependen del pulso de reloj de la FPGA, de mayor velocidad comparado a la frecuencia máxima alcanzada, por lo que no se preveén problemas de discontinuidad en el conteo.
+
+Al llegar al límite del temporizador, se definen los límites a partir de la frecuencia máxima. Como se determinó en la caraterización, el máximo de vueltas que alcanza la aspa son de 50 por segundo, por lo que se definen 4 intervalos de octava, con los siguiente sidentificadores:
+
+| Pulsos contados    | Código identificador |
+|--------------------|----------------------|
+| 0 a 15 pulsos      | 2                    |
+| 16 a 30 pulsos     | 3                    |
+| Más de 30 pulsos   | 4                    |
+
+Luego de ese proceso, se guarda el identificador de octava, y se envia por UART; tanto el contador como el temporizador va a 0. A continuación, se muestra el diagrama ASM que sintetiza el proceso con su respectivo diagrama de máquina de estados finitos.
+
+<p align="center">
+<img alt="image" src="https://github.com/SantiH75/Sintetizador-de-Chuck-Digital-1/blob/main/Trompeta_/Diagrama_ASM_contador_de_pulsos.drawio%20(1).png" />
+</p>
+
+<p align="center">
+<img alt="image" src="https://github.com/SantiH75/Sintetizador-de-Chuck-Digital-1/blob/main/Trompeta_/Diagrama_MEF_contador_de_pulsos.drawio.png" />
+</p>
+
+# Diseño de prototipo
 
