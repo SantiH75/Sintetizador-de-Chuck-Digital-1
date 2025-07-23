@@ -26,4 +26,10 @@ En el caso particular de los instrumentos de viento, estos aprovechan un flujo d
 
 # Planteamiento
 
-## Hola
+De la sección de introducción, logra abstraen tres momentos importantes en el funcionamiento de un instrumento de viento:
+
+- Generación de sonido a través debido a una vibración generada por el flujo del aire.
+- Modificación de la frecuencia a través de actuadores (pistones).
+- Amplificación del sonido ya modificado.
+
+Estas tres partes serán los tres modulos principales del proyecto, 
