@@ -23,3 +23,7 @@ En el caso particular de los instrumentos de viento, estos aprovechan un flujo d
 - Plantear la interacción entre difreneets módulos del sistema para que funcionen y se complementen de manera simultánea.
 - Establecer un sistema de comunicación para el módulo general del instrumento.
 - Desarrollar un diseño físico que soporte y optimize el uso físico del instrumento a tarvés de modelado.
+
+# Planteamiento
+
+## Hola
