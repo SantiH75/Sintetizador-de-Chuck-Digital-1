@@ -144,7 +144,13 @@ Al llegar al límite del temporizador, se definen los límites a partir de la fr
 | 16 a 30 pulsos     | 3                    |
 | Más de 30 pulsos   | 4                    |
 
-Luego de ese proceso, se guarda el identificador de octava, y se envia por UART; tanto el contador como el temporizador va a 0. A continuación, se muestra el diagrama ASM que sintetiza el proceso con su respectivo diagrama de máquina de estados finitos.
+Luego de ese proceso, se guarda el identificador de octava, y se envia por UART; tanto el contador como el temporizador va a 0. El identificador sive de manera que, a través de la siguiente formula, puede pasarse de un código de nota MIDI base a su nota correspondiente:
+
+```
+nota_base + octava * 12
+```
+
+A continuación, se muestra el diagrama ASM que sintetiza el proceso con su respectivo diagrama de máquina de estados finitos.
 
 <p align="center">
 <img alt="image" src="https://github.com/SantiH75/Sintetizador-de-Chuck-Digital-1/blob/main/Trompeta_/Diagrama_ASM_contador_de_pulsos.drawio%20(1).png" />
