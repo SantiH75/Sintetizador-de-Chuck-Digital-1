@@ -96,7 +96,7 @@ Los pistones pueden ser simulados a través de un _multiplexor_, basado en selec
 <img alt="image" src="https://github.com/SantiH75/Sintetizador-de-Chuck-Digital-1/blob/main/Trompeta_/IMG-20250722-WA0013.jpg" />
 </p>
 
-A continuación, a través de un Diagrama ASM, se sintetiza las combinaciones determinadas para cada nota, además, de su respectivo diagrama de maquina de estados finitos.
+A continuación, a través de un Diagrama ASM, se sintetiza las combinaciones determinadas para cada nota, además, de su respectivo diagrama de maquina de estados finitos y diagrama rtl.
 
 <p align="center">
 <img alt="image" src="https://github.com/SantiH75/Sintetizador-de-Chuck-Digital-1/blob/main/Trompeta_/Diagrama_ASM.drawio.png" />
@@ -104,6 +104,10 @@ A continuación, a través de un Diagrama ASM, se sintetiza las combinaciones de
 
 <p align="center">
 <img alt="image" src="https://github.com/SantiH75/Sintetizador-de-Chuck-Digital-1/blob/main/Trompeta_/Diagrama_MEF_botones.drawio.png" />
+</p>
+
+<p align="center">
+<img alt="image" src="https://github.com/SantiH75/Sintetizador-de-Chuck-Digital-1/blob/main/Trompeta_/IMG-20250722-WA0012.jpg" />
 </p>
 
 ## Contador de pulsos
@@ -150,7 +154,7 @@ Luego de ese proceso, se guarda el identificador de octava, y se envia por UART;
 nota_base + octava * 12
 ```
 
-A continuación, se muestra el diagrama ASM que sintetiza el proceso con su respectivo diagrama de máquina de estados finitos.
+A continuación, se muestra el diagrama ASM que sintetiza el proceso con su respectivo diagrama de máquina de estados finitos y diagrama rtl.
 
 <p align="center">
 <img alt="image" src="https://github.com/SantiH75/Sintetizador-de-Chuck-Digital-1/blob/main/Trompeta_/Diagrama_ASM_contador_de_pulsos.drawio%20(1).png" />
@@ -158,6 +162,10 @@ A continuación, se muestra el diagrama ASM que sintetiza el proceso con su resp
 
 <p align="center">
 <img alt="image" src="https://github.com/SantiH75/Sintetizador-de-Chuck-Digital-1/blob/main/Trompeta_/Diagrama_MEF_contador_de_pulsos.drawio.png" />
+</p>
+
+<p align="center">
+<img alt="image" src="https://github.com/SantiH75/Sintetizador-de-Chuck-Digital-1/blob/main/Trompeta_/IMG-20250722-WA0019.jpg" />
 </p>
 
 # Diseño de prototipo
