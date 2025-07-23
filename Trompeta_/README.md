@@ -92,6 +92,10 @@ Los pistones pueden ser simulados a través de un _multiplexor_, basado en selec
 | 1             |1           |0           |La               |
 | 1             |1           |1           |Si               |
 
+<p align="center">
+<img alt="image" src="https://github.com/SantiH75/Sintetizador-de-Chuck-Digital-1/blob/main/Trompeta_/IMG-20250722-WA0013.jpg" />
+</p>
+
 A continuación, a través de un Diagrama ASM, se sintetiza las combinaciones determinadas para cada nota, además, de su respectivo diagrama de maquina de estados finitos.
 
 <p align="center">
@@ -111,6 +115,15 @@ Para simular la boquilla de la trompeta, se utiliza una aspa que tiene un iman e
 <p align="center">
 <img alt="image" src="https://github.com/SantiH75/Sintetizador-de-Chuck-Digital-1/blob/main/Trompeta_/Sensor_efecto_hall.PNG" />
 </p>
+
+<p align="center">
+<img alt="image" src="https://github.com/SantiH75/Sintetizador-de-Chuck-Digital-1/blob/main/Trompeta_/IMG-20250723-WA0006.jpg" />
+</p>
+
+<p align="center">
+<img alt="image" src="https://github.com/SantiH75/Sintetizador-de-Chuck-Digital-1/blob/main/Trompeta_/IMG-20250723-WA0007.jpg" />
+</p>
+
 
 Con el sistema _transductor_ físico ya implemetado, se busca establecer una sería de límites en el número de pulsos en cierto intervalo de tiempo, para determinar la octava a utilizar.
 
@@ -143,3 +156,12 @@ Luego de ese proceso, se guarda el identificador de octava, y se envia por UART;
 
 # Diseño de prototipo
 
+Para el desarrollo integral del proyecto, se diseñó, modeló e implementó un prototipo utilizando impresión 3D. Este diseño tiene como propósito proteger y almacenar los componentes de hardware utilizados en la aplicación: la hélice encargada de captar los pulsos, los botones que generan un código binario traducido en notas musicales, las tarjetas de desarrollo (ESP32 y FPGA) y el sistema de alimentación, compuesto por una batería externa (power bank).
+
+Inicialmente, el modelo fue concebido como una caja dividida en tres secciones: alimentación, sensores y sistema de control del circuito. No obstante, con el objetivo de optimizar el espacio y mejorar la funcionalidad, se rediseñó en dos secciones: una destinada a la alimentación, y otra en forma de escalón que permite una conexión eficiente entre la ESP32 y la FPGA, facilitando además el acceso a los pines necesarios para conectar tanto el módulo de la hélice como el de los pulsadores.
+
+Adicionalmente, se incorporaron dos elementos estéticos en la parte frontal y posterior del prototipo, con el fin de simular la forma de una trompeta real y así reforzar la identidad musical del dispositivo.
+
+<p align="center">
+<img alt="image" src="https://github.com/SantiH75/Sintetizador-de-Chuck-Digital-1/blob/main/Trompeta_/IMG-20250723-WA0001.jpg" />
+</p>
