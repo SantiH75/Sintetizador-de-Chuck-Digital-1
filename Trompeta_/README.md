@@ -18,6 +18,7 @@ En el caso particular de los instrumentos de viento, estos aprovechan un flujo d
 <p align="center">
 <img width="444" height="259" alt="image" src="https://github.com/SantiH75/Sintetizador-de-Chuck-Digital-1/blob/main/Trompeta_/Trompeta-Hal-Gatewood-Unsplash.jpg" />
 </p>
+
 # Objetivos 
 
 - Entender el comportamiento modular en el diseño de un sistema digital a través de la implementación de un instruemnto que tenga como base circuito lógicos digitales para modificaci´´on tonal de un soonido.
@@ -37,8 +38,13 @@ De la sección de introducción, logra abstraen tres momentos importantes en el 
 
 Estas tres partes serán los tres modulos principales del proyecto, dos de ellos funcionando de manera simultánea, la generación de flujo de aire, para finalizar en el último paso, que es la amplificación. De esta manera, lo primero que se establece es un orden en desarrollo de los modulos, a su vez, estableciendo su análogo digital:
 
-1. **Sistema de pistones:** Se utiliza un sistema de pulsadores que funcione como multiplexor para la selección mutuamente excluyente entre 8 notas diferentes.
+1. **Sistema de pistones:** Se utiliza un sistema de pulsadores que funcione como _multiplexor_ para la selección mutuamente excluyente entre 8 notas diferentes.
 2. **Actuador con flujo de aire:** Con ayuda de un sensor magnético, se utiliza un contador, limitado a través de un temporizador para obtener la rapidez del conteo de pulsos, y por ende, determinar la altura máxima del sonido.
 3. **Producción de sonido:** Con el dato de la nota y la altura correspondiente, se transmiten los datos a través de la ESP33 por protocolo UART, y se llevan a un script de Chuck para su ejecución.
 
 ## Sistema de pulsadores
+
+La unidad básica de la música se construye a través de notas musicales, que no son más, que una onda sonorá con cierta frecuencia característica reconocicle al oido humano.
+
+En el sistema de música occidental, sin contar las frecuencias que son multiplos de otras, existen 12 notas musicales. Sin embargo, es común seleccionar 8 de estas notas con relaciones espeíficas entre sí para que suenen agradables (se le llama escala musical), y le brinden cierta sonoridad específica. La escala más conocida es la de Do mayor, que se representan a través de las 8 notas blancas de un teclado, y presenta las 7 notas qe se reconocen comunmente (Do, re, mi, fa, sol, la, si), y adicional, una nota que dobla en frecuencia al primer do (denominado en este proyecto como do alto).
+
