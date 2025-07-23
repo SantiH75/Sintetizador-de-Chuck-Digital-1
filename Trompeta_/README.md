@@ -37,8 +37,8 @@ De la sección de introducción, logra abstraen tres momentos importantes en el 
 
 Estas tres partes serán los tres modulos principales del proyecto, dos de ellos funcionando de manera simultánea, la generación de flujo de aire, para finalizar en el último paso, que es la amplificación. De esta manera, lo primero que se establece es un orden en desarrollo de los modulos, a su vez, estableciendo su análogo digital:
 
-1. **Sistema de pistones:** 
-2. **Actuador con flujo de aire:**
-3. ** Producción
+1. **Sistema de pistones:** Se utiliza un sistema de pulsadores que funcione como multiplexor para la selección mutuamente excluyente entre 8 notas diferentes.
+2. **Actuador con flujo de aire:** Con ayuda de un sensor magnético, se utiliza un contador, limitado a través de un temporizador para obtener la rapidez del conteo de pulsos, y por ende, determinar la altura máxima del sonido.
+3. **Producción de sonido:** Con el dato de la nota y la altura correspondiente, se transmiten los datos a través de la ESP33 por protocolo UART, y se llevan a un script de Chuck para su ejecución.
 
 ## Sistema de pulsadores
